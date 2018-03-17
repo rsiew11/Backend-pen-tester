@@ -1,0 +1,82 @@
+.desc {
+	font-family: sans-serif;
+	font-style: italic;
+	font-weight: normal;
+	color: black;
+	font-size: smaller;
+}
+
+td.data {
+	font-family: serif;
+	font-style: normal;
+	font-weight: bolder;
+	color: black;
+}
+
+td.char_checks {
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: bolder;
+	color: black;
+	text-align: left;
+	width: 100px;
+	font-size: smaller;
+}
+
+.button {
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: black;
+}
+
+body {
+	background-color: #D4D0C8;
+}
+
+div.inputsCell {
+	overflow: hidden;
+	display: inline-table;
+}
+
+table.inputsTable {
+
+	
+	border-collapse: collapse;
+	border: thin solid black;
+}
+td.inputsHeader {
+
+	border: thin solid black;
+	font-weight: bolder;
+}
+
+td.inputsTableName {
+
+
+	background-color: #ffffff;
+	border: thin solid black;
+	font-style: italic;
+	/*cursor: pointer;*/
+}
+
+td.inputsTableValue {
+
+	background-color: #ffffff;
+	border: thin solid black;
+	/*cursor: pointer;*/
+}
+
+td.inputsTableAction {
+
+	background-color: #ffffff;
+	border: thin solid black;
+}
+
+legend {
+	font-family: serif;
+	font-size: smaller;
+	font-style: normal;
+	font-weight: bolder;
+	color: #303030;
+}

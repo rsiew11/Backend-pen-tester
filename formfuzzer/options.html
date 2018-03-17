@@ -1,0 +1,775 @@
+<html>
+<head>
+
+<title>Form Fuzzer Options</title>
+
+<link href="fopts.css" rel="stylesheet" type="text/css"/>
+
+<script src="settings.js"></script>
+
+<script type="text/javascript">
+
+function save_options() {
+
+  var fuzz_hidden_fields = document.getElementById("fuzz_hidden_fields");
+  if(fuzz_hidden_fields.checked) {
+  	setHidden('y');
+  } else {
+  	setHidden('n');
+  }
+
+  document.getElementById("max_text_length").value =
+  	setMaxLength(document.getElementById("max_text_length").value);
+
+  document.getElementById("fuzz_template").value =
+  	setTemplate(document.getElementById("fuzz_template").value);
+
+  document.getElementById("select_item_to_mark").selectedIndex =
+    setSelectedItem(document.getElementById("select_item_to_mark").selectedIndex);
+
+  var mark_fuzzed_field = document.getElementById("mark_fuzzed_field");
+  if(mark_fuzzed_field.checked) {
+  	setMark('y');
+  } else {
+  	setMark('n');
+  }
+
+
+
+  var show_hide = document.getElementById("show_hide");
+  if(show_hide.checked) {
+  	setHideToText('y');
+  } else {
+  	setHideToText('n');
+  }
+  var show_pass = document.getElementById("show_pass");
+  if(show_pass.checked) {
+  	setPassToText('y');
+  } else {
+  	setPassToText('n');
+  }
+
+
+
+
+  document.getElementById("fuzz_mark_color").value =
+  	setMarkColor(document.getElementById("fuzz_mark_color").value);
+
+  var fuzz_ta_fields = document.getElementById("fuzz_ta_fields");
+  if(fuzz_ta_fields.checked) {
+  	setFuzzTA('y');
+
+  } else {
+  	setFuzzTA('n');
+  }
+
+document.getElementById("fuzz_ta_values").value =
+  	setTAVal(document.getElementById("fuzz_ta_values").value);
+
+  var check_checkbox_fields = document.getElementById("check_checkbox_fields");
+  if(check_checkbox_fields.checked) {
+  	setCheckCheckbox('y');
+  } else {
+  	setCheckCheckbox('n');
+  }
+  var check_radio_fields = document.getElementById("check_radio_fields");
+  if(check_radio_fields.checked) {
+  	setSelRadFields('y');
+  } else {
+  	setSelRadFields('n');
+  }
+
+
+  var fuzz_password_fields = document.getElementById("fuzz_password_fields");
+  if(fuzz_password_fields.checked) {
+  	setFuzzPass('y');
+  } else {
+  	setFuzzPass('n');
+  }
+
+  var use_max_length = document.getElementById("use_max_length");
+  if(use_max_length.checked) {
+  	setUseMax('y');
+  } else {
+  	setUseMax('n');
+  }
+
+  var template_option = document.getElementById("template_random");
+
+var template_random = '';
+for(var i = 1; i < 22; i++) {
+	if(document.getElementById("rand_value_"+i).checked) {
+		template_random += document.getElementById("rand_value_"+i).value;
+	setRand(i, 'y');
+	} else {
+	setRand(i, 'n');
+	}
+}
+
+  if(template_option.checked) {
+
+  	setTempOpt('random',template_random);
+
+  } else {
+  	setTempOpt('template', null);
+  }
+
+
+
+//  status.innerHTML = "Form Fuzzer Settings Saved.";
+//  setTimeout(function() {
+//    status.innerHTML = "";
+//  }, 999);
+
+}
+
+function erase_options() {
+
+	localStorage.removeItem("fuzz_hidden_fields");
+	localStorage.removeItem("max_text_length");
+	localStorage.removeItem("fuzz_template");
+	localStorage.removeItem("mark_fuzzed_field");
+	localStorage.removeItem("check_checkbox_fields");
+	localStorage.removeItem("check_radio_fields");
+
+	localStorage.removeItem("fuzz_mark_color");
+	localStorage.removeItem("select_item_to_mark");
+	localStorage.removeItem("fuzz_password_fields");
+    localStorage.removeItem("use_max_length");
+	localStorage.removeItem("template_option");
+
+	localStorage.removeItem("fuzz_textarea_fields");
+	localStorage.removeItem("textarea_fuzz");
+
+
+
+	localStorage.removeItem("pass_to_text");
+	localStorage.removeItem("hide_to_text");
+
+for(var i = 1; i < 22; i++) {
+	setRand(i, 'n');
+}
+
+localStorage.removeItem("template_random");
+
+
+	location.reload();
+}
+
+function restore_options() {
+
+  settings = getSettings();
+
+  document.getElementById("fuzz_ta_values").value = settings.textarea_fuzz;
+
+  if (settings.fuzz_textarea_fields == 'n') {
+    document.getElementById("fuzz_ta_fields").checked = false;
+  } else {
+    document.getElementById("fuzz_ta_fields").checked = true;
+  }
+
+
+
+  if (settings.pass_to_text == 'n') {
+    document.getElementById("show_pass").checked = false;
+  } else {
+    document.getElementById("show_pass").checked = true;
+  }
+  if (settings.hide_to_text == 'n') {
+    document.getElementById("show_hide").checked = false;
+  } else {
+    document.getElementById("show_hide").checked = true;
+  }
+
+
+
+  if (settings.fuzz_hidden_fields == 'n') {
+    document.getElementById("fuzz_hidden_fields").checked = false;
+  } else {
+    document.getElementById("fuzz_hidden_fields").checked = true;
+  }
+
+  document.getElementById("max_text_length").value = settings.max_text_length;
+  document.getElementById("fuzz_template").value = settings.fuzz_template;
+  document.getElementById("fuzz_mark_color").value = settings.fuzz_mark_color;
+
+  if (settings.mark_fuzzed_field == 'n') {
+    document.getElementById("mark_fuzzed_field").checked = false;
+  } else {
+
+    //todo - enable / disable color field based on y/n
+    document.getElementById("mark_fuzzed_field").checked = true;
+  }
+
+
+
+
+  if (settings.select_radio_fields == 'n') {
+    document.getElementById("check_radio_fields").checked = false;
+  } else {
+    document.getElementById("check_radio_fields").checked = true;
+  }
+  if (settings.check_checkbox_fields == 'n') {
+    document.getElementById("check_checkbox_fields").checked = false;
+  } else {
+    document.getElementById("check_checkbox_fields").checked = true;
+  }
+
+  if (settings.fuzz_password_fields == 'n') {
+    document.getElementById("fuzz_password_fields").checked = false;
+  } else {
+    document.getElementById("fuzz_password_fields").checked = true;
+  }
+
+  if (settings.use_max_length == 'n') {
+    document.getElementById("use_max_length").checked = false;
+  } else {
+    document.getElementById("use_max_length").checked = true;
+  }
+
+  for(var i = 0; i <= (settings.select_item_to_mark > 9 ? settings.select_item_to_mark : 9); i++) {
+  	var selectList = document.getElementById("select_item_to_mark");
+  	addOpt(selectList, selectList.length, selectList.length);
+  }
+
+  document.getElementById("select_item_to_mark").selectedIndex = settings.select_item_to_mark;
+
+		var input_item_data_fields = localStorage["input_item_data_fields"];
+		if(input_item_data_fields && input_item_data_fields.length > 0) {
+			split_input_item_data_fields = input_item_data_fields.split(",");
+			for(var i = 0; i < split_input_item_data_fields.length; i++) {
+				var value = localStorage["input_item_data_value_"+split_input_item_data_fields[i]];
+				addOverride(split_input_item_data_fields[i], value);
+			}
+		}
+
+	if (settings.template_option == 'random') {
+		document.getElementById("template_random").checked = true;
+	} else {
+		document.getElementById("template_template").checked = true;
+	}
+
+
+	for(var i = 1; i < 22; i++) {
+		if(settings["rand_value_"+i] && settings["rand_value_"+i] == 'y') {
+			document.getElementById("rand_value_"+i).checked = true;
+		}
+	}
+	document.getElementById("rand_value_10").value = "\"'~";
+
+}
+
+
+function deleteItem(name) {
+
+
+	var inputsTableRow = document.getElementById(name+'_parent_row');
+
+	inputsTable = document.getElementById("inputsTable");
+	var input_item_data_fields = localStorage["input_item_data_fields"];
+	var prefix = "";
+
+
+	//alert(input_item_data_fields);
+
+	var input_item_data_fields_temp = "";
+
+	if(input_item_data_fields && input_item_data_fields.length > 0) {
+
+		split_input_item_data_fields = input_item_data_fields.split(",");
+
+		for(var i = 0; i < split_input_item_data_fields.length; i++) {
+			if(split_input_item_data_fields[i] !=name) {
+				input_item_data_fields_temp += prefix+split_input_item_data_fields[i];
+				prefix = ",";
+			}
+		}
+
+	}
+
+	localStorage["input_item_data_fields"] = input_item_data_fields_temp;
+
+	localStorage.removeItem("input_item_data_value_"+name);
+
+	inputsTable.removeChild(inputsTableRow);
+}
+function editItem(name, value) {
+var input_item_data_field = document.getElementById("input_item_data_field");
+var input_item_data_value = document.getElementById("input_item_data_value");
+
+input_item_data_field.value = document.getElementById(name).innerHTML;
+input_item_data_value.value = document.getElementById(value).innerHTML;
+}
+
+function addOverride(name, value) {
+
+var inputsTable;
+
+var inputsTableRow = document.getElementById(name+'_parent_row');
+if(!inputsTableRow) {
+	inputsTableRow = document.createElement("tr");
+	inputsTableRow.setAttribute('id',name+'_parent_row');
+inputsTable = document.getElementById("inputsTable");
+} else {
+inputsTableRow.innerHTML = "";
+}
+
+var inputsTableName = document.createElement("td");
+inputsTableName.innerHTML = name
+inputsTableName.setAttribute('class','inputsTableName');
+inputsTableName.setAttribute('id',name);
+var inputsTableValue = document.createElement("td");
+inputsTableValue.innerHTML = value;
+inputsTableValue.setAttribute('class','inputsTableValue');
+inputsTableValue.setAttribute('id',name+'_value');
+var inputsTableAction = document.createElement("td");
+inputsTableAction.innerHTML = "<button onclick=\"editItem('" + name + "','" + name + "_value')\">Edit</button><button onclick=\"deleteItem('" + name + "')\">Delete</button>";
+inputsTableAction.setAttribute('class', 'inputsTableAction');
+inputsTableRow.appendChild(inputsTableName);
+inputsTableRow.appendChild(inputsTableValue);
+inputsTableRow.appendChild(inputsTableAction);
+
+
+if(inputsTable) {
+inputsTable.appendChild(inputsTableRow);
+}
+
+}
+
+function addOpt(list, val, txt) {
+  var newOpt = document.createElement("option");
+  newOpt.text = txt;
+  newOpt.value = val;
+  list.options.add(newOpt);
+}
+
+function addMore() {
+  var selectList = document.getElementById("select_item_to_mark");
+  var selectListLength = selectList.length;
+  addOpt(selectList, selectListLength, selectListLength);
+
+  selectList.selectedIndex = selectListLength;
+}
+
+</script>
+
+</head>
+
+<body onload="restore_options()">
+
+<TABLE ALIGN="left" BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="100%">
+<TR ALIGN="left" VALIGN="middle">
+	<TD class="desc">Use the fields below to adjust the fuzz tester to your needs and preferences. Apply these changes by using the Save Settings button at the bottom of the page.</TD>
+</TR>
+
+
+<TR ALIGN="left" VALIGN="middle">
+	<TD class="data">
+<br>
+		<fieldset>
+	<legend>Input Field Configuration</legend>
+
+<div class="desc">This section is used to configure text, password and hidden fields. Basically all configuration for inputs that typically accept freeform input.</div>
+<br>
+			<fieldset>
+	<legend>Text Field Length Configuration</legend>
+	Max Text Field Length to Inject:&nbsp;<input type="text" size="7" id="max_text_length"/><input type="checkbox" id="use_max_length"/>&nbsp;Use Field <i>maxLength</i> Where Possible?
+
+<div class="desc">The maximum field length is a cap on the length of the text to inject into a test field. Specifying that the test should use the field max length value will utilize the max specified by the field input but never go over the maximum cap. Not using the field max input length will apply the max value to all fields. This affects fields of text type only.</div>
+	</fieldset>
+<br>
+<input type="checkbox" id="fuzz_password_fields"/>&nbsp;Fuzz Passwords?
+<br>
+<div class="desc">Checking this indicates that password fields should be included.</div>
+<br>
+<input type="checkbox" id="show_pass"/>&nbsp;Show Passwords?
+<br>
+<div class="desc">Checking this will cause password fields to be show as plain text when fuzzed.</div>
+<br>
+		<fieldset>
+	<legend>Field Value Customization</legend>
+
+    <script>
+      var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz=+-_)(*&^%$#@!~<,>.?:;[]{}";
+      function getRandomChar() {
+      	var r = Math.floor(Math.random() * chars.length);
+
+      	return chars.substring(r,r+1);
+      }
+    </script>
+
+
+	<input id="template_template" type="radio" name="template_option" value="template">Fuzzing Template: <input type="text" size="88" id="fuzz_template"/>
+
+	<button  class="button" onclick="document.getElementById('fuzz_template').value=document.getElementById('fuzz_template').value+getRandomChar()">Add Random</button>
+
+<div class="desc">The template are characters that will be used to populate the values of text, password and hidden input fields. This can be no greater than 256 characters in length. If the length is shorter than the max length specified the template value will repeat as required.</div>
+
+<br>
+
+<input type="radio" name="template_option"  id="template_random" value="random">Random Characters Including:<br>
+
+<table border=0>
+<tr>
+<td class="char_checks"><input id="rand_value_1" type="checkbox" value="ABCDEFGHIJKLMNOPQRSTUVWXYZ">ABC...</td>
+<td class="char_checks"><input id="rand_value_2" type="checkbox" value="abcdefghijklmnopqrstuvwxyz">abc...</td>
+<td class="char_checks"><input id="rand_value_3" type="checkbox" value="123456789">123...</td>
+<td class="char_checks"><input id="rand_value_4" type="checkbox" value="0">0</td>
+<td class="char_checks"><input id="rand_value_5" type="checkbox" value="<>">< ></td>
+<td class="char_checks"><input id="rand_value_6" type="checkbox" value="@">@</td>
+<td class="char_checks"><input id="rand_value_7" type="checkbox" value="&">&</td>
+</tr>
+<tr>
+<td class="char_checks"><input id="rand_value_8" type="checkbox" value="*">*</td>
+<td class="char_checks"><input id="rand_value_9" type="checkbox" value="#">#</td>
+<td class="char_checks"><input id="rand_value_10" type="checkbox" >~ ' "</td>
+<td class="char_checks"><input id="rand_value_11" type="checkbox" value="$">$</td>
+<td class="char_checks"><input id="rand_value_12" type="checkbox" value="\">\</td>
+<td class="char_checks"><input id="rand_value_13" type="checkbox" value="|">|</td>
+<td class="char_checks"><input id="rand_value_14" type="checkbox" value=",.;:?!">, . ; : ! ?</td>
+</tr>
+<tr>
+<td class="char_checks"><input id="rand_value_15" type="checkbox" value="(){}[]">( ) { } [ ]</td>
+<td class="char_checks"><input id="rand_value_16" type="checkbox" value="/">/</td>
+<td class="char_checks"><input id="rand_value_17" type="checkbox" value="%">%</td>
+<td class="char_checks"><input id="rand_value_18" type="checkbox" value="^">^</td>
+<td class="char_checks"><input id="rand_value_19" type="checkbox" value="`">`</td>
+<td class="char_checks"><input id="rand_value_20" type="checkbox" value="_">_</td>
+<td class="char_checks"><input id="rand_value_21" type="checkbox" value="-+=">- + =</td>
+</tr>
+</table>
+<br>
+
+<script>
+function selectSome(what) {
+	switch(what) {
+
+		case 1:
+		document.getElementById("rand_value_1").checked=true;
+		document.getElementById("rand_value_2").checked=true;
+		break;
+
+		case 2:
+		document.getElementById("rand_value_3").checked=true;
+		document.getElementById("rand_value_4").checked=true;
+		break;
+		case 3:
+		document.getElementById("rand_value_1").checked=true;
+		document.getElementById("rand_value_2").checked=true;
+		document.getElementById("rand_value_3").checked=true;
+		document.getElementById("rand_value_4").checked=true;
+		document.getElementById("rand_value_5").checked=true;
+		document.getElementById("rand_value_6").checked=true;
+		document.getElementById("rand_value_7").checked=true;
+		document.getElementById("rand_value_8").checked=true;
+		document.getElementById("rand_value_9").checked=true;
+		document.getElementById("rand_value_10").checked=true;
+		document.getElementById("rand_value_11").checked=true;
+		document.getElementById("rand_value_12").checked=true;
+		document.getElementById("rand_value_13").checked=true;
+		document.getElementById("rand_value_14").checked=true;
+		document.getElementById("rand_value_15").checked=true;
+		document.getElementById("rand_value_16").checked=true;
+		document.getElementById("rand_value_17").checked=true;
+		document.getElementById("rand_value_18").checked=true;
+		document.getElementById("rand_value_19").checked=true;
+		document.getElementById("rand_value_20").checked=true;
+		document.getElementById("rand_value_21").checked=true;
+		break;
+		case 4:
+		document.getElementById("rand_value_1").checked=false;
+		document.getElementById("rand_value_2").checked=false;
+		document.getElementById("rand_value_3").checked=false;
+		document.getElementById("rand_value_4").checked=false;
+		document.getElementById("rand_value_5").checked=false;
+		document.getElementById("rand_value_6").checked=false;
+		document.getElementById("rand_value_7").checked=false;
+		document.getElementById("rand_value_8").checked=false;
+		document.getElementById("rand_value_9").checked=false;
+		document.getElementById("rand_value_10").checked=false;
+		document.getElementById("rand_value_11").checked=false;
+		document.getElementById("rand_value_12").checked=false;
+		document.getElementById("rand_value_13").checked=false;
+		document.getElementById("rand_value_14").checked=false;
+		document.getElementById("rand_value_15").checked=false;
+		document.getElementById("rand_value_16").checked=false;
+		document.getElementById("rand_value_17").checked=false;
+		document.getElementById("rand_value_18").checked=false;
+		document.getElementById("rand_value_19").checked=false;
+		document.getElementById("rand_value_20").checked=false;
+		document.getElementById("rand_value_21").checked=false;
+		break;
+		case 5:
+		document.getElementById("rand_value_6").checked=true;
+		document.getElementById("rand_value_7").checked=true;
+		document.getElementById("rand_value_8").checked=true;
+		document.getElementById("rand_value_9").checked=true;
+		document.getElementById("rand_value_10").checked=true;
+		document.getElementById("rand_value_11").checked=true;
+
+		document.getElementById("rand_value_17").checked=true;
+		document.getElementById("rand_value_18").checked=true;
+		document.getElementById("rand_value_19").checked=true;
+		document.getElementById("rand_value_20").checked=true;
+
+
+	}
+}
+</script>
+<button onclick="selectSome(3)" class="button">Select All</button><button onclick="selectSome(4)" class="button">Select None</button><button onclick="selectSome(5)" class="button">Select Special</button><button onclick="selectSome(2)" class="button">Select Numbers</button><button onclick="selectSome(1)" class="button">Select Alphabetic</button>
+<div class="desc">Random characters are an alternative to using a template. The selected items create a list of available characters that are then chosen at random to populate form fields.</div>
+</fieldset>
+
+<br>
+<input type="checkbox" id="fuzz_hidden_fields"/>&nbsp;Fuzz Hidden Fields?
+
+<div class="desc">Indicate if hidden form fields are to be included in the test. If so please note that some strange behaviors may be encountered since hidden fields are often used as page control indicators or for other behind the scenes application logic. Actually this is also a good reason to include them.</div>
+
+<br>
+<input type="checkbox" id="show_hide"/>&nbsp;Show Hidden Fields?
+<br>
+<div class="desc">Checking this will cause hidden fields to be shown when fuzzed.</div>
+<br>
+		<fieldset>
+	<legend>Field Overrides</legend>
+<div class="desc">
+Overriding a name places specific values in text, hidden and password input types instead of applying the fuzzing value. This is useful for site with some degree of validation on inputs like e-mail, dates etc.</div><br>
+
+
+
+
+
+
+
+
+
+		<fieldset>
+	<legend>Find Active Inputs</legend>
+
+	  <script>
+	    function getAllCurrentTabs() {
+
+		  document.getElementById("tab_names").length = 0;
+
+	      chrome.tabs.getAllInWindow(null, function(tabs) {
+	      	if(tabs && tabs.length > 0) {
+	      		for(var i = 0; i < tabs.length; i++) {
+	      			addOpt(document.getElementById("tab_names"), tabs[i].id, tabs[i].title);
+	      		}
+	      	} else {
+	      		//TODO - notify! no tabs to get inputs from...
+	      	}
+	      });
+	    }
+
+	    function updateInputsFromTab(tabSelect) {
+
+	    	document.getElementById("input_names").length = 0;
+localStorage["input_names"] ="";
+
+
+			chrome.tabs.executeScript(parseInt(tabSelect.options[tabSelect.selectedIndex].value), {file: "inputs.js"}, function() {
+
+chrome.extension.sendRequest({payloadid:"getnames"}, function(response) {
+			  if(response.input_names) {
+
+    			split_input_name = response.input_names.split(",");
+
+    			for(var i = 0; i < split_input_name.length; i++) {
+
+      				addOpt(document.getElementById("input_names"), split_input_name[i], split_input_name[i]);
+    			}
+  			  }
+});
+
+
+			});
+	    }
+
+	  </script>
+	  <select size="7" id="tab_names" style="width: 498px" onclick="updateInputsFromTab(this)"></select>
+
+	  <script>
+	    function updateInputItemData(inputItem) {
+	      document.getElementById("input_item_data_field").value = inputItem.options[inputItem.selectedIndex].value;
+	    }
+	  </script>
+
+      <select size="7" id="input_names" style="width: 298px"  onclick="updateInputItemData(this)"></select>
+      <br>
+	  <button  class="button" onclick="getAllCurrentTabs()">Refresh Tabs Listing</button>
+<div class="desc">Selecting a tab will list all the text, hidden and password fields found within forms on that page.</div>
+</fieldset>
+<br>
+
+	<fieldset>
+	<legend>Set Override Values</legend>
+
+	<script>
+	function setOverrideVal() {
+		var field = document.getElementById("input_item_data_field").value;
+		var value = document.getElementById("input_item_data_value").value;
+
+		if(field && value && field.length > 0 && value.length > 0) {
+			input_item_data_fields = localStorage["input_item_data_fields"];
+			if(input_item_data_fields && input_item_data_fields.length > 0) {
+
+
+			    split_input_item_data_fields = localStorage.input_item_data_fields.split(",");
+				var found = false;
+			    found: for(var i = 0; i < split_input_item_data_fields.length; i++) {
+					if(field == split_input_item_data_fields[i]) {
+						// already set, set new value...
+						found=true;
+						break found;
+					}
+			    }
+
+			    if(!found) {
+						input_item_data_fields = input_item_data_fields + "," + field
+				}
+			} else {
+				input_item_data_fields = field;
+			}
+
+			localStorage["input_item_data_fields"] = input_item_data_fields;
+
+			// set value for field.
+			localStorage["input_item_data_value_"+field] = value;
+
+			addOverride(field, value);
+
+		}
+
+
+	}
+	</script>
+      Name:&nbsp;<input type="text" style="width: 398px" id="input_item_data_field"/>
+      Value:&nbsp;<input type="text" style="width: 250px" id="input_item_data_value"/>&nbsp;
+      <button  class="button" style="width: 140px" onclick="setOverrideVal()">Set Value</button>
+<br>
+
+<br>
+
+Current Override Values:
+<table id="inputsTable" class="inputsTable">
+
+<tr>
+<td class="inputsHeader" style="width:312px">Input Name</td>
+<td class="inputsHeader" style="width:266px">Value to Assign</td>
+<td class="inputsHeader">Actions</td>
+</tr>
+
+
+
+</table>
+
+</fieldset>
+
+<br>
+
+	<div class="desc">Use the refresh tabs listing to list all the active tabs in the current browser. Once one of these are selected the page inputs, if any, will be listed in the next select list to the right of the tabs listing. Select an input name and in the edit boxes below the select lists enter a value and click the set value button. Alternatively simply enter the name of the field and the value and click set value if you know the exact name of the field to override. Note that the names are intentionally global and not narrowed to any current tab, window or site. Once the value is set it appears in the table above where it can be selected and changed or removed from use.</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</fieldset>
+
+
+
+
+
+	</fieldset></br>
+	</TD>
+</TR>
+
+<TR ALIGN="left" VALIGN="middle">
+
+	<TD class="data">
+	<fieldset>
+	<legend>Textarea Configuration</legend>
+
+	<input type="checkbox" id="fuzz_ta_fields"/>&nbsp;Fuzz Textareas?
+
+<div class="desc">
+Text areas are igored by default. Checking this option will include textarea fields in fuzz testing. The template below will be applied to all text areas found within forms.
+</div>
+<br>
+<textarea id="fuzz_ta_values" rows="7" cols="86">
+
+</textarea>
+	</fieldset><br>
+	</TD>
+</TR>
+
+<TR ALIGN="left" VALIGN="middle">
+
+	<TD class="data">
+	<fieldset>
+	<legend>Field Highlighting</legend>
+	Mark Fuzzed Field:&nbsp;<input type="checkbox" id="mark_fuzzed_field"/>&nbsp;Use Color:&nbsp;<input type="text" size="9" id="fuzz_mark_color"/>&nbsp;<!--button onclick="document.getElementById('fuzz_mark_color').style.backgroundColor='#ffffff'">Remove Highlight Color</button-->
+
+<div class="desc">
+Marking a field that has been updated will change the background to the color specified. Please use hex color values. Use of other values may cause errors or fail to be applied. Note that this will change the background of text, password and drop-down lists. It will not change radio buttons or checkbox inputs.
+</div>
+	</fieldset><br>
+	</TD>
+</TR>
+
+<TR ALIGN="left" VALIGN="middle">
+
+
+	<TD class="data">
+		<fieldset>
+		<legend>Select List Configuration</legend>
+
+
+	Drop Down Index to Select:&nbsp;<select id="select_item_to_mark"></select><button class="button" onclick="addMore()">+</button>
+
+<div class="desc">This determines what item in a drop down list will be selected based on the index. If you specify a value greater than the items available in the list then the last item in that list will be selected instead. Use the plus button to add more index values to the select list.</div>
+	</fieldset><br>
+
+	</TD>
+</TR>
+
+<TR ALIGN="left" VALIGN="middle">
+	<TD class="data">
+
+	<fieldset>
+		<legend>Checkbox and Radio Buttons</legend>
+	<input type="checkbox" id="check_checkbox_fields"/>&nbsp;Check Checkbox Inputs?
+
+	<div class="desc">Check this to set all checkbox fields in the targeted page to be checked when tested.</div>
+<br>
+	<input type="checkbox" id="check_radio_fields"/>&nbsp;Select Radio Fields?
+
+	<div class="desc">Check this to select the last item appearing in a set of radio fields or leave unchecked to ignore radio buttons.</div>
+	</fieldset><br>
+	</TD>
+</TR>
+
+
+<TR ALIGN="left" VALIGN="middle">
+	<TD class="desc">Save settings to apply the values above. Reset will restore all to the default values, you still must choose save after resetting to apply the values.</TD>
+</TR>
+<TR ALIGN="left" VALIGN="middle">
+	<TD class="data">
+
+	<br>
+       <button class="button" onclick="save_options()">Save Settings</button><button class="button" onclick="erase_options()">Reset All</button>
+       <br><br><br><br>
+	</TD>
+</TR>
+</TABLE>
+
+</body>
+
+</html>
