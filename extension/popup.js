@@ -51,7 +51,7 @@ function randomChar(){
 function createString(len){
     var s = '';
     for (var i=0; i<len; i++){
-        s.concat(randomChar());
+        s = s.concat(randomChar());
     }
     return s;
 }
@@ -91,29 +91,43 @@ function startCSRF(){
 
 //------------------------------------------------------------------------------
 function startFuzzing(fuzLen, iterCount){
+    var site = "http://192.168.1.29/?s="
     console.log(fuzLen);
-    console.log(iterCount);
-    console.log("LDSLKJFJDSKFDKSJFKLDSJKFJDSKFJDKFJKLSDJFKLDJFKDLS");
+    var test = site.concat(createString(fuzLen));
+    console.log(test);
     for (let i = 0; i < iterCount; i++) {
-        //TODO:
-        // open iterCount number of tabs... each with different payload
-        //chrome.tabs.create({'url': "http://192.168.1.29/"}); // right now website is hardcoded...
-        console.log(i);
-        chrome.tabs.create({'url': "https://wordpress.com"}); // test website for now
+        chrome.tabs.create({'url': test}); // right now website is hardcoded...
+        test = site.concat(createString(fuzLen));
+
+
+        //chrome.tabs.create({'url': "https://wordpress.com"}); // test website for now
     }
-    //now need to wait for the pages to be loaded
 
-    chrome.tabs.query( {},function(tabs){
 
-        for (let i = 0; i<iterCount; i++){
-            //TODO: loop throught the tabs and inject a payload into each
-            //chrome.tabs.executeScript(tabs[i].id,{file: ""})
 
-        }
 
-    });
 
 /*
+
+    //now need to wait for the pages to be loaded
+
+    // chrome.tabs.query( {},function(tabs){
+
+    //     for (let i = 0; i<iterCount; i++){
+    //         //TODO: loop throught the tabs and inject a payload into each
+    //         chrome.tabs.executeScript(tabs[i].id,{
+    //             code: "document."
+    //         })
+
+    //     }
+
+    // });
+
+
+
+
+
+
         chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
             // make sure the status is 'complete' and it's the right tab
             if (tab.url.indexOf('127.0.0.1:8000') != -1 && changeInfo.status == 'complete') {
@@ -130,13 +144,15 @@ function startFuzzing(fuzLen, iterCount){
                 // your code ...
             }
         });
-*/
 
         //fillForm(createString(fuzLen));
 
 
         // payload inserted in all of the forms
         // and then all submitted
+*/
+
+
 
 }
 
