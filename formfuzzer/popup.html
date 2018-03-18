@@ -46,12 +46,21 @@ https://markb.co.uk/building-a-simple-google-chrome-extension.html
             <input type="radio" name="selection" id="selectFuzzing" value="Fuzzing" />
         </form>
 
-        <form id="fuzzing">.              <!-- the form for the # of iters!!!!  -->
+        <form id="iterCount">.              <!-- the form for the # of iters!!!!  -->
             <p>
                 How many iterations of tests?<br>
-                <label for="iterCount">number of iterations:</label><br />
-                <input type="text" id="iterCount" name="iterCount" value="" >
-                <input id="startFuzzing" type="submit" value = "Run Tests" />
+                <label for="iterCount">Number of Iterations:</label><br />
+                <input type="text" id="iterCount" name="iterCount" value="50" >
+            </p>
+        </form>
+
+        <form id="injectionLen">.              <!-- the form for the # of iters!!!!  -->
+            <p>
+                How many long should the injection String be?<br>
+                <label for="injectionLen">Length of Injection:</label><br />
+                <input type="text" id="injectLen" name="injectLen" value="50" >
+            </p><p>
+                <input id="startTest" type="submit" value = "Start Test" />
             </p>
         </form>
 
