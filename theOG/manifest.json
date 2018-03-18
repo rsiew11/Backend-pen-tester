@@ -1,0 +1,20 @@
+{
+   "background": {
+      "page": "fuzzer.html"
+   },
+   "browser_action": {
+      "default_icon": "input_validation_32.png"
+   },
+   "description": "HTML form fuzz tester.",
+   "icons": {
+      "128": "html_128.png",
+      "16": "html_16.png",
+      "48": "html_48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcjjck4obB7azT9JLsS2upC98u0YUSiTJMJzkoer0p/6Juz1E3YzP2TKaISyP0aWhn1IWg9yM0HqyYbxImp4ZfoW05osC7UEM1DDKAlQaWGP5EgdiWYdza1EQuv15G+butCvp+lVrwgVldesPPocRCeQ2zhb9z6t5gfywWEjXW9wIDAQAB",
+   "name": "Form Fuzzer",
+   "options_page": "options.html",
+   "permissions": [ "tabs", "http://*/*", "https://*/*" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "1.4"
+}

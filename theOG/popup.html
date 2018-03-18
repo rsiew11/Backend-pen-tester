@@ -1,0 +1,45 @@
+<!--
+https://markb.co.uk/building-a-simple-google-chrome-extension.html
+ -->
+
+<html>
+<head>
+    <style>
+        body {
+            min-width: 400px;
+            overflow-x: hidden;
+            font-family: Arial;
+            font-size: 11px
+        }
+        input, textarea {
+            width: 400px;
+        }
+        input#save {
+            font-weight: bold; width: auto;
+        }
+    </style>
+</head>
+    <body>
+        <h1>Hello World</h1>
+            <button id="new_tab" />NewTab</button>
+            <button id="new_window" />NewWin</button>
+
+        <div id="container"></div>
+        <form id="colorSelect">
+            <p>Change the color of the page:</p>
+            <p>
+                <label for="HEX">HEX Color Val</label><br />
+                <input type="text" id="hexVal" name="hex" value="" >
+                <input id="setColor" type="submit" value = "Set Color" />
+            </p>
+        </form>
+
+        <h2>Counter</h2>
+        <div id="counter"/></div>
+            <button id="up_arrow"><img src="upArrow.png" width="50" height="50" /></button>
+            <button id="down_arrow"><img src="downArrow.png" width="50" height="50" /></button>
+            <script src = "hello.js"> </script>
+
+    </body>
+</html>
+
