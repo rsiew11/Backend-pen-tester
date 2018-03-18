@@ -34,10 +34,22 @@ https://markb.co.uk/building-a-simple-google-chrome-extension.html
             </p>
         </form>
 
-        <form id="fuzzing">
-            <p>how many iterations of tests?</p>
+
+
+        <form id="testSelect" action = "">   <!-- the Radio buttons!!!!  -->
+            Test Selection:<br>
+            <label for="SQL"> SQL</label>
+            <input type="radio"  name="selection" id="selectSQL" value="SQL" /><br>
+            <label for="CSRF"> CSRF</label>
+            <input type="radio"  name="selection" id="selectCSRF" value="CSRF" /><br>
+            <label for="Fuzzing"> Fuzzing</label>
+            <input type="radio" name="selection" id="selectFuzzing" value="Fuzzing" />
+        </form>
+
+        <form id="fuzzing">.              <!-- the form for the # of iters!!!!  -->
             <p>
-                <label for="HEX">number of iterations</label><br />
+                How many iterations of tests?<br>
+                <label for="iterCount">number of iterations:</label><br />
                 <input type="text" id="iterCount" name="iterCount" value="" >
                 <input id="startFuzzing" type="submit" value = "Run Tests" />
             </p>
@@ -45,9 +57,11 @@ https://markb.co.uk/building-a-simple-google-chrome-extension.html
 
         <h2>Counter</h2>
         <div id="counter"/></div>
-            <button id="up_arrow"><img src="upArrow.png" width="50" height="50" /></button>
-            <button id="down_arrow"><img src="downArrow.png" width="50" height="50" /></button>
-            <script src = "hello.js"> </script>
+            <button id="up_arrow"><img src="upArrow.png" width="25" height="25" /></button>
+            <button id="down_arrow"><img src="downArrow.png" width="25" height="25" /></button>
+
+
+        <script src = "popup.js"> </script>
 
     </body>
 </html>
