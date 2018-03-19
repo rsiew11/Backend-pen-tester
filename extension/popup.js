@@ -98,63 +98,9 @@ function startFuzzing(fuzLen, iterCount){
     for (let i = 0; i < iterCount; i++) {
         chrome.tabs.create({'url': test}); // right now website is hardcoded...
         test = site.concat(createString(fuzLen));
-
-
-        //chrome.tabs.create({'url': "https://wordpress.com"}); // test website for now
     }
-
-
-
-
-
-/*
-
-    //now need to wait for the pages to be loaded
-
-    // chrome.tabs.query( {},function(tabs){
-
-    //     for (let i = 0; i<iterCount; i++){
-    //         //TODO: loop throught the tabs and inject a payload into each
-    //         chrome.tabs.executeScript(tabs[i].id,{
-    //             code: "document."
-    //         })
-
-    //     }
-
-    // });
-
-
-
-
-
-
-        chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-            // make sure the status is 'complete' and it's the right tab
-            if (tab.url.indexOf('127.0.0.1:8000') != -1 && changeInfo.status == 'complete') {
-                chrome.tabs.executeScript(null, {
-                    code: "alert('hi');"
-                });
-            }
-        }
-
-        OR!!!!!!!
-
-        chrome.tabs.onUpdated.addListener(function (tabId , info) {
-            if (info.status === 'complete') {
-                // your code ...
-            }
-        });
-
-        //fillForm(createString(fuzLen));
-
-
-        // payload inserted in all of the forms
-        // and then all submitted
-*/
-
-
-
 }
+
 
 //---------------------------End of Test Functions------------------------------
 //------------------------------------------------------------------------------
@@ -189,7 +135,6 @@ function startTest(){
     }
 
 }
-
 
 
 document.getElementById('setColor').addEventListener('click',changeBackgroundColor);
