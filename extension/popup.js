@@ -39,7 +39,6 @@ function changeBackgroundColor() {
 //------------------------------------------------------------------------------
 
 
-
 //generates a single random charcter
 function randomChar(){
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz=+-_)(*&^%$#@!~<,>.?:;[]{}";
@@ -68,16 +67,23 @@ function fillForm(s){
 }
 //------------------------------------------------------------------------------
 
-
 //------------------------------------------------------------------------------
 //--------------------The Various Tests Functions-------------------------------
 //------------------------------------------------------------------------------
 function startSQL(iterCount){
     //TODO: the whole thing
 
+    var sqlDatabase = [
+    "",
+    "",
+    "",
+    "",
+    ""]
+
+    var site = "http://192.168.1.29/?s="
+    var test = site.concat()
     for (var i=0; i<iterCount; i++){
         //shit
-
 
     }
 
@@ -85,16 +91,15 @@ function startSQL(iterCount){
 
 //------------------------------------------------------------------------------
 function startCSRF(){
-    //TODO: the whole thing
+    //TODO: the whole thing nams stuff here
 
 }
 
 //------------------------------------------------------------------------------
 function startFuzzing(fuzLen, iterCount){
-    var site = "http://192.168.1.29/?s="
-    console.log(fuzLen);
+    var site = "http://192.168.1.29/?s=" // search term will be appended
     var test = site.concat(createString(fuzLen));
-    console.log(test);
+
     for (let i = 0; i < iterCount; i++) {
         chrome.tabs.create({'url': test}); // right now website is hardcoded...
         test = site.concat(createString(fuzLen));
