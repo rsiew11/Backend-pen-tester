@@ -39,7 +39,6 @@ function changeBackgroundColor() {
 //------------------------------------------------------------------------------
 
 
-
 //generates a single random charcter
 function randomChar(){
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz=+-_)(*&^%$#@!~<,>.?:;[]{}";
@@ -68,16 +67,24 @@ function fillForm(s){
 }
 //------------------------------------------------------------------------------
 
-
 //------------------------------------------------------------------------------
 //--------------------The Various Tests Functions-------------------------------
 //------------------------------------------------------------------------------
 function startSQL(iterCount){
     //TODO: the whole thing
 
+    var sqlDatabase = [
+    "",
+    "",
+    "",
+    "",
+    ""]
+
+
+    var site = "http://192.168.1.29/?s="
+    var test = site.concat()
     for (var i=0; i<iterCount; i++){
         //shit
-
 
     }
 
@@ -85,16 +92,25 @@ function startSQL(iterCount){
 
 //------------------------------------------------------------------------------
 function startCSRF(){
-    //TODO: the whole thing
+    //TODO: the whole thing nams stuff here
 
 }
 
 //------------------------------------------------------------------------------
 function startFuzzing(fuzLen, iterCount){
-    var site = "http://192.168.1.29/?s="
-    console.log(fuzLen);
+
+
+    // chrome.tabs.query({
+    // active: true,
+    // currentWindow: true
+    // }, function(tabs) {
+    //     var tabURL = tabs[0].url;
+    //     console.log(tabURL);
+    // });
+
+    var site = "http://192.168.1.29/?s=" // search term will be appended
     var test = site.concat(createString(fuzLen));
-    console.log(test);
+
     for (let i = 0; i < iterCount; i++) {
         chrome.tabs.create({'url': test}); // right now website is hardcoded...
         test = site.concat(createString(fuzLen));
@@ -118,7 +134,7 @@ function startTest(){
 
     var iterations = Number(document.getElementById('iterCount').value);
     //checking value of iterCount
-    if((iterations >= 1000)|| (iterations <= 0)){
+    if((iterations >= 1000) || (iterations <= 0)){
         //TODO: the alert closes instantly
         alert("enter a valid value for the number of iterations")
     }
@@ -137,13 +153,13 @@ function startTest(){
 }
 
 
-document.getElementById('setColor').addEventListener('click',changeBackgroundColor);
+// document.getElementById('setColor').addEventListener('click',changeBackgroundColor);
 document.getElementById('startTest').addEventListener('click',startTest);
 
-document.getElementById('new_tab').addEventListener('click',newTab);
-document.getElementById('new_window').addEventListener('click',newWindow);
+// document.getElementById('new_tab').addEventListener('click',newTab);
+// document.getElementById('new_window').addEventListener('click',newWindow);
 
-document.getElementById('up_arrow').addEventListener('click',upArrow);
-document.getElementById('down_arrow').addEventListener('click',downArrow);
+// document.getElementById('up_arrow').addEventListener('click',upArrow);
+// document.getElementById('down_arrow').addEventListener('click',downArrow);
 
 
