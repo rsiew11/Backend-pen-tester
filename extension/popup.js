@@ -40,17 +40,32 @@ function changeBackgroundColor() {
 
 
 //generates a single random charcter
-function randomChar(){
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz=+-_)(*&^%$#@!~<,>.?:;[]{}";
-    var r = Math.floor(Math.random() * chars.length);
-    return chars.substring(r,r+1);
+function randomChar(characters){
+    var pool = "";
+    var allChars = [
+                "0123456789",
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                "abcdefghiklmnopqrstuvwxyz",
+                "=+-_)(*&^%$#@!~<,>.?:;[]{}",
+                "œ∑´®†¥¨ˆøπ“‘«åß∂ƒ©˙∆˚¬˚…æΩ≈ç√∫˜µ≤≥÷",
+                "¡™£¢∞§¶•ªº–≠"
+                ];
+
+    for (let i=0; i<allChars.length; i++){
+        if (characters[i] == true){
+            pool = pool.concat(allChars[i]);
+        }
+    }
+
+    var r = Math.floor(Math.random() * pool.length);
+    return pool.substring(r,r+1);
 }
 
 //------------------------------------------------------------------------------
-function createString(len){
+function createString(len, characters){
     var s = '';
     for (var i=0; i<len; i++){
-        s = s.concat(randomChar());
+        s = s.concat(randomChar(characters));
     }
     return s;
 }
@@ -60,7 +75,7 @@ function fillForm(s){
     //TODO
     //find the submit/search bar and fill it out
 
-    var injection = "document.forms[0].elements[0].name=".concat(s)
+    var injection = "document.forms[0].elements[0].name=".concat(s);
 
     chrome.tabs.executeScript(null,
     {
@@ -138,33 +153,18 @@ function startSQL(){
 //------------------------------------------------------------------------------
 function startCSRF(){
     //TODO: the whole thing nams stuff here
-    var shit = [
-        'hi', //th
-        'you', //onnin
-        "oishdgi",
-
-    ];
 
 }
 
 //------------------------------------------------------------------------------
-function startFuzzing(fuzLen, iterCount){
-
-
-    // chrome.tabs.query({
-    // active: true,
-    // currentWindow: true
-    // }, function(tabs) {
-    //     var tabURL = tabs[0].url;
-    //     console.log(tabURL);
-    // });
+function startFuzzing(fuzLen, iterCount, characters){
 
     var site = "http://localhost:8888/search.php?search=" // search term will be appended
-    var test = site.concat(createString(fuzLen));
+    var test = site.concat(createString(fuzLen,characters));
 
     for (let i = 0; i < iterCount; i++) {
         chrome.tabs.create({'url': test}); // right now website is hardcoded...
-        test = site.concat(createString(fuzLen));
+        test = site.concat(createString(fuzLen,characters));
     }
 }
 
@@ -174,7 +174,6 @@ function startFuzzing(fuzLen, iterCount){
 
 // runs the test based on radio buttons
 function startTest(){
-    console.log("lsdjfkldsjdjf");
 
     //check which radio button is selected
     if(document.getElementById('selectSQL').checked){
@@ -189,28 +188,35 @@ function startTest(){
         //checking value of setLen
         if((len >= 1000) || (len <= 0)){
             //TODO: the alert closes instantly
-            alert("enter a valid value for the string Length")
+            alert("enter a valid value for the string Length");
         }
         var iterations = Number(document.getElementById('iterCount').value);
         //checking value of iterCount
         if((iterations >= 1000) || (iterations <= 0)){
             //TODO: the alert closes instantly
-            alert("enter a valid value for the number of iterations")
+            alert("enter a valid value for the number of iterations");
         }
-        startFuzzing(len,iterations);
+                         //nums,   up,  low,  spe, vspe, nvspe
+        var characters = [false,false,false,false,false,false];
+        characters[0] = document.getElementById('numbers').checked;
+        characters[1] = document.getElementById('upperChar').checked;
+        characters[2] = document.getElementById('lowerChar').checked;
+        characters[3] = document.getElementById('special').checked;
+        characters[4] = document.getElementById('verySpecial').checked;
+        characters[5] = document.getElementById('numberVerySpecial').checked;
+
+        startFuzzing(len,iterations, characters);
 
     }
 
 }
 
 
-// document.getElementById('setColor').addEventListener('click',changeBackgroundColor);
 document.getElementById('startTest').addEventListener('click',startTest);
 
-// document.getElementById('new_tab').addEventListener('click',newTab);
-// document.getElementById('new_window').addEventListener('click',newWindow);
 
-// document.getElementById('up_arrow').addEventListener('click',upArrow);
-// document.getElementById('down_arrow').addEventListener('click',downArrow);
+
+
+
 
 

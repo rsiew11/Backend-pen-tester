@@ -47,6 +47,34 @@ https://markb.co.uk/building-a-simple-google-chrome-extension.html
             <input type="radio" name="selection" id="selectFuzzing" value="Fuzzing" />
         </form>
 
+        <fieldset>
+                <legend>Fuzzing Chars</legend>
+            <div>
+                <input type="checkbox" id="numbers" value="numbers">
+                <label for="numbers">Numbers</label>
+            </div>
+            <div>
+                <input type="checkbox" id="upperChar" value="upperChar">
+                <label for="upperChar">Upper Case Chars</label>
+            </div>
+            <div>
+                <input type="checkbox" id="lowerChar" value="lowerChar">
+                <label for="lowerChar">Lower Case Chars</label>
+            </div>
+            <div>
+                <input type="checkbox" id="special" value="special">
+                <label for="special">Special Chars</label>
+            </div>
+            <div>
+                <input type="checkbox" id="verySpecial" value="verySpecial">
+                <label for="verySpecial">Very Special Chars</label>
+            </div>
+            <div>
+                <input type="checkbox" id="numberVerySpecial" name="numberVerySpecial" value="numberVerySpecial">
+                <label for="numberVerySpecial">Numpad Very Special Chars</label>
+            </div>
+        </fieldset>
+
         <form id="iterationCount">.              <!-- the form for the # of iters!!!!  -->
             <p>
                 How many iterations of tests? (for fuzzing)<br>
