@@ -150,8 +150,6 @@ function startSQL(){
 
 }
 
-//------------------------------------------------------------------------------
-<<<<<<< HEAD
 function displayCSRF(){
     var background = chrome.extension.getBackgroundPage();
     console.log("token info?");
@@ -162,11 +160,6 @@ function displayCSRF(){
         csrf.innerHTML = "CSRF token found:" + background.token_info.csrf_token;
         document.body.appendChild(csrf);
     }
-=======
-function startCSRF(){
-    //TODO: the whole thing nams stuff here
->>>>>>> 53f23b096cca6fa1dd768562da775e9fd6775f54
-
 }
 
 //------------------------------------------------------------------------------
