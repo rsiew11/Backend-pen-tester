@@ -136,14 +136,17 @@ function startSQL(){
 }
 
 //------------------------------------------------------------------------------
-function startCSRF(){
-    //TODO: the whole thing nams stuff here
-    var shit = [
-        'hi', //th
-        'you', //onnin
-        "oishdgi",
+function displayCSRF(){
+    var background = chrome.extension.getBackgroundPage();
+    console.log("token info?");
+    console.log(background.token_info);
+    //document.getElementById('csrf_token').innerHTML = background.token_info.csrf_token;
 
-    ];
+    if (typeof background.token_info.csrf_token !== "undefined") {
+        var csrf = document.createElement("div");
+        csrf.innerHTML = "CSRF token found:" + background.token_info.csrf_token;
+        document.body.appendChild(csrf);
+    }
 
 }
 
@@ -180,9 +183,6 @@ function startTest(){
     if(document.getElementById('selectSQL').checked){
         startSQL();
     }
-    else if(document.getElementById('selectCSRF').checked){
-        startCSRF();
-    }
     else if(document.getElementById('selectFuzzing').checked){
 
         var len = Number(document.getElementById('injectLen').value);
@@ -205,6 +205,7 @@ function startTest(){
 
 
 // document.getElementById('setColor').addEventListener('click',changeBackgroundColor);
+displayCSRF();
 document.getElementById('startTest').addEventListener('click',startTest);
 
 // document.getElementById('new_tab').addEventListener('click',newTab);

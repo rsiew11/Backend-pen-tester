@@ -9,6 +9,9 @@
 
   "manifest_version": 2,
   "permissions": ["tabs", "activeTab"],
+  "background":{
+    "scripts": ["background.js"]
+  },
 
   "content_scripts": [
     {
