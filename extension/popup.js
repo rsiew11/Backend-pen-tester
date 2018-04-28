@@ -140,7 +140,6 @@ function displayCSRF(){
     var background = chrome.extension.getBackgroundPage();
     console.log("token info?");
     console.log(background.token_info);
-    //document.getElementById('csrf_token').innerHTML = background.token_info.csrf_token;
 
     if (typeof background.token_info.csrf_token !== "undefined") {
         var csrf = document.createElement("div");
