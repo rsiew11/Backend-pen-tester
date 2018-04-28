@@ -35,5 +35,3 @@ function send_popup() {
 }
 
 send_popup();
-
-
