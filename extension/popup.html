@@ -9,27 +9,55 @@ https://markb.co.uk/building-a-simple-google-chrome-extension.html
             min-width: 400px;
             overflow-x: hidden;
             font-family: Arial;
-            font-size: 11px
+            font-size: 12px;
+            background-color: lightgrey;
+            font-family: verdana;
         }
-        input, textarea {
-            width: 400px;
+        textarea {
+            width: 50px;
+        }
+        input[type=checkbox] {
+            width: 20px;
+        }
+        input {
+            width: 120px;
+            font-family: verdana;
+        }
+        input[type=radio]{
+            display: inline;
         }
         input#save {
             font-weight: bold; width: auto;
         }
+        input[type=submit] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #378f67;
+        }
+
+
     </style>
 </head>
     <body>
         <form id="testSelect" action = "">   <!-- the Radio buttons!!!!  -->
-            Test Selection:<br>
-            <label for="SQL"> SQL</label>
+            <h2>BEPT Test Selection:</h2>
+            <label for="SQL"> <b>SQL Injection</b></label>
             <input type="radio"  name="selection" id="selectSQL" value="SQL" /><br>
-            <label for="Fuzzing"> Fuzzing</label>
+            <label for="Fuzzing"> <b>Fuzzing</b></label>
             <input type="radio" name="selection" id="selectFuzzing" value="Fuzzing" />
         </form>
 
         <fieldset>
-                <legend>Fuzzing Chars</legend>
+                <legend><b>Fuzzing Char Selection</b></legend>
             <div>
                 <input type="checkbox" id="numbers" value="numbers">
                 <label for="numbers">Numbers</label>
@@ -55,24 +83,26 @@ https://markb.co.uk/building-a-simple-google-chrome-extension.html
                 <label for="numberVerySpecial">Numpad Very Special Chars</label>
             </div>
         </fieldset>
-
-        <form id="iterationCount">.              <!-- the form for the # of iters!!!!  -->
-            <p>
-                How many iterations of tests? (for fuzzing)<br>
-                <label for="iterCount">Number of Iterations:</label><br />
-                <input type="text" id="iterCount" name="iterCount" value="" >
-            </p>
-        </form>
-
-        <form id="injectionLen">.              <!-- the form for the # of iters!!!!  -->
-            <p>
-                How long should the injection String be? (for fuzzing)<br>
-                <label for="injectionLen">Length of Injection:</label><br />
-                <input type="text" id="injectLen" name="injectLen" value="" >
-            </p><p>
-                <input id="startTest" type="submit" value = "Start Test" />
-            </p>
-        </form>
+        <fieldset>
+            <legend><b>Iteration Count</b></legend>
+            <form id="iterationCount">              <!-- the form for the # of iters!!!!  -->
+                <p>
+                    <label for="iterCount">Number of Iterations:</label>
+                    <input type="text" id="iterCount" name="iterCount" value="" placeholder="for fuzzing test...">
+                </p>
+            </form>
+        </fieldset>
+        <fieldset>
+            <legend><b>Injection String Length</b></legend>
+            <form id="injectionLen">              <!-- the form for the # of iters!!!!  -->
+                <p>
+                    <label for="injectionLen">Length of Injection:</label>
+                    <input type="text" id="injectLen" name="injectLen" value="" placeholder="for fuzzing test...">
+        </fieldset>
+                </p><p>
+                    <input id="startTest" type="submit" value = "Start Test"/>
+                </p>
+            </form>
 
 
         <script src = "popup.js"> </script>
